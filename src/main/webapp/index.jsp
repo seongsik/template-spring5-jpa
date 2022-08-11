@@ -10,7 +10,7 @@
   <head>
     <title>$Title$</title>
     <script type="text/javascript">
-      location.href = '/index';
+      location.href = '/swagger-ui.html';
     </script>
   </head>
 </html>

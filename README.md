@@ -71,6 +71,23 @@ spring.datasource.password=
 
 ## Faker
 
+## Swagger
+* SwaggerConfig.java 구현
+* (Optional) ApiInfo Method 구현하여 Document 설명.
+ 
+```java
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build();
+    }
+}
+```
+
+
 ## JPA
 * application.properties
 ```properties

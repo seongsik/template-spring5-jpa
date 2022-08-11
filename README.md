@@ -94,8 +94,9 @@ seongsik-kim
         * Tomcat Home 설정 - OK
     * VM options 인코딩 설정
         * -Dfile.encoding=UTF-8
-    * (Warning: No artifacts... 발생 시) Fix
-        * [PROJECT_NAME]:war exploded 선택, OK
+    * (Warning: No artifacts... 발생) Fix
+        * [PROJECT_NAME]:war exploded 선택
+        * Deployment - context root 경로 설정
 
 * Run Tomcat Server
     * Error: port out of range 발생 시

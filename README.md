@@ -39,9 +39,53 @@ seongsik-kim
 * Modify context file name
     * applicationContext.xml → root-context.xml
     * dispatcher-servlet.xml → servlet-context.xml
+    * 이동 : servlet-context.xml → WEB-INF/spring/appServlet/servlet-context.xml
     * /pom.xml 파일 수정
         * 초기설정 백업 : pom.xml.init
         
+* web.xml 설정 변경
+```xml
+    <!-- root-context -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/root-context.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- servlet-context    -->
+    <servlet>
+        <servlet-name>appServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>appServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+```
+
+* servlet-context.xml 설정 변경
+```xml
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <mvc:annotation-driven />
+
+    <mvc:default-servlet-handler/>
+
+    <context:component-scan base-package="com.ssk.dev" />
+
+    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/WEB-INF/views/" />
+        <beans:property name="suffix" value=".jsp" />
+    </beans:bean>
+```
+
 ## Tomcat Settings
 * Add Configuration... 
     * '+' - Tomcat Server - Local 
@@ -53,6 +97,10 @@ seongsik-kim
     * (Warning: No artifacts... 발생 시) Fix
         * [PROJECT_NAME]:war exploded 선택, OK
 
-* Error: port out of range 발생 시
-    * Tomcat Home/conf/server.xml
-    * <Server port="8005" 등으로 변경
+* Run Tomcat Server
+    * Error: port out of range 발생 시
+        * Tomcat Home/conf/server.xml
+        * <Server port="8005" 등으로 변경
+    
+## Log4j2 설정
+* /main/resources/log4j2.xml

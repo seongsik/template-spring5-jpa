@@ -7,14 +7,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by sik371@ktnet.co.kr 2022-08-11 오후 3:48
+ * Index Page 처리 담당 Controller.
+ *
+ * @author ssk
  */
 @Controller
 @RequestMapping("/")
 public class IndexController {
+
+    /**
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     *
+     * @return page page path
+     * @see IndexController
+     * Index Page
+     */
     @RequestMapping("index")
     public String index(HttpServletRequest request, HttpServletResponse response) {
+        String page = "index";
 
-        return "index";
+        this.index(request, response);
+        return page;
     }
 }

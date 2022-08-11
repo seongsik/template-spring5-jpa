@@ -15,5 +15,5 @@ gen
 .idea/libraries/
 .idea/misc.xml
 lib/
-study-spring5.iml
+template-spring5-intellij.iml
 target

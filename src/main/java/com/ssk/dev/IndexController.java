@@ -16,18 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 public class IndexController {
 
     /**
+     * Index Page
+     *
      * @param request HttpServletRequest
      * @param response HttpServletResponse
      *
-     * @return page page path
-     * @see IndexController
-     * Index Page
+     * @return page path
      */
     @RequestMapping("index")
     public String index(HttpServletRequest request, HttpServletResponse response) {
-        String page = "index";
-
-        this.index(request, response);
-        return page;
+        return "index";
     }
 }

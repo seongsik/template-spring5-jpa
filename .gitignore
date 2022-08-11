@@ -15,7 +15,4 @@ gen
 .idea/libraries/
 .idea/misc.xml
 lib/
-pom.xml
-src/
 study-spring5.iml
-web/

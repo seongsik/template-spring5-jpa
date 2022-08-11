@@ -1,4 +1,4 @@
-# Study Spring 5 (Intellij)
+# Tempate - Spring 5 (Intellij)
 seongsik-kim
 
 ## Setting Encoding UTF-8  

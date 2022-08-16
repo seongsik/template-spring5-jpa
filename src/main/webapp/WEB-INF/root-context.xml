@@ -44,8 +44,7 @@
                 <prop key="hibernate.show_sql">true</prop>
 
                 <!-- Entity 의 field name 을 Camelcase 로 사용할 수 있도록 -->
-                <prop key="hibernate.naming.implicit-strategy">org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</prop>
-                <prop key="hibernate.naming.physical-strategy">org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy</prop>
+                <prop key="hibernate.physical_naming_strategy">com.ssk.dev.config.HibernatePhysicalNamingStrategy</prop>
             </props>
         </property>
     </bean>

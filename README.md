@@ -126,8 +126,7 @@ public class SwaggerConfig {
                    <prop key="hibernate.show_sql">true</prop>
 
                 <!-- Entity 의 field name 을 Camelcase 로 사용할 수 있도록 -->
-                <prop key="hibernate.naming.implicit-strategy">org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</prop>
-                <prop key="hibernate.naming.physical-strategy">org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy</prop>
+                <prop key="hibernate.physical_naming_strategy">com.ssk.dev.config.HibernatePhysicalNamingStrategy</prop>
                </props>
            </property>
        </bean>
@@ -145,6 +144,30 @@ public class SwaggerConfig {
     * 하이버네이트 사용을 위해 jpaVendorAdapter 프로퍼티에 HibernateJpaVendorAdapter 클래스 설정.  
     * packagesToScan 을 이용해 도메인 객체를 스캔할 수 있도록 패키지 지정. (Sp3.1 이후 persistance.xml 을 대체함.)
 
+* naming strategy
+    * @Column(name = "member_id") 등을 사용하지 않아도 Camelcase 를 Snakecase 로 치환해 준다. 
+    * PhysicalNamingStrategyStandardImpl 를 상속받아 Overriding.
+    * (Spring boot 의 경우 SpringPhysicalNamingStrategy 를 기본 제공한다)
+    
+```java
+public class HibernatePhysicalNamingStrategy extends PhysicalNamingStrategyStandardImpl {
+
+    @Override
+    public Identifier toPhysicalColumnName(Identifier name, JdbcEnvironment jdbcEnvironment) {
+        return convertToSnakeCase(name);
+    }
+
+    private Identifier convertToSnakeCase(Identifier identifier) {
+        if (identifier == null) {
+            return null;
+        }
+        String name = identifier.getText();
+        String newName = name.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+        return Identifier.toIdentifier(newName);
+    }
+}
+
+```
 
 ### Spring Data JPA
 * JPA EntityManager를 래핑해 더 단순화된 JPA기반 데이터엑세스 인터페이스를 제공. 

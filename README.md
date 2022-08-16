@@ -1,12 +1,19 @@
 # Tempate - Spring 5 - JPA
 seongsik-kim
 
+1. [Spec](#Spec)
+1. [pom.xml](#pom.xml)
+1. [H2 Database](#H2-Database)
+1. [Faker](#Faker)
+1. [JPA](#JPA)
+1. [Spring Data JPA](#Spring-Data-JPA)
+1. [JPA Join](#JPA-JOIN)
+
+## Spec
 * Spring 5.3.22
 * JDK 1.8.0_231
 * H2 Database
 * Intellij 및 STS 호환
-
-
 
 ## pom.xml
 ```xml

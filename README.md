@@ -148,10 +148,10 @@ public class SwaggerConfig {
     
 * JPA EntityManagerFactory 
     * 하이버네이트 사용을 위해 jpaVendorAdapter 프로퍼티에 HibernateJpaVendorAdapter 클래스 설정.  
-    * packagesToScan 을 이용해 도메인 객체를 스캔할 수 있도록 패키지 지정. (Sp3.1 이후 persistance.xml 을 대체함.)
+    * packagesToScan 을 이용해 도메인 객체를 스캔할 수 있도록 패키지 지정. (Spring 3.1 이후 persistance.xml 을 대체함.)
 
-* naming strategy
-    * @Column(name = "member_id") 등을 사용하지 않아도 Camelcase 를 Snakecase 로 치환해 준다. 
+* Naming Strategy
+    * @Column(name = "member_id") 등을 사용하지 않아도 Camel case 를 Snake case 로 치환해 준다. 
     * PhysicalNamingStrategyStandardImpl 를 상속받아 Overriding.
     * (Spring boot 의 경우 SpringPhysicalNamingStrategy 를 기본 제공한다)
     

@@ -241,6 +241,7 @@ public class ApiResponse<T> {
 
 ### JPA JOIN
 #### Eager Loading
+* ManyToOne, OneToOne 관계에서 주로 사용.
 * Orders.java
 ```java
     @OneToOne(fetch = FetchType.EAGER)
@@ -249,6 +250,7 @@ public class ApiResponse<T> {
 ```
 
 #### Lazy Loading
+* OneToMany, ManyToMany 관계에서 주로 사용.
 * Lazy Loading 은 최초 Proxy Object 에 바인딩 처리하며, 객체 접근 시 데이터를 조회한다.  
 * Orders.java
 ```java
@@ -257,3 +259,41 @@ public class ApiResponse<T> {
     private Member member;
 ```
 
+#### Nullable Join
+* Outer Join 수행
+    * @ManyToOne 관계에서 optional 속성이 true(default)인 경우 
+    * @JoinColumn 의 nullable 속성이 true(default) 인 경우
+    
+* Inner Join 수행 (필수 관계)
+    * @ManyToOne 관계에서 optional 속성이 false 인 경우 
+    * @JoinColumn 의 nullable 속성이 false 인 경우
+
+
+#### N+1 Problem
+* 목록 쿼리 실행 시, 레코드 수만큼 반복해 쿼리가 실행되어 성능이 저하되는 현상. 
+* FetchType 과 무관하게 발생할 수 있다. 
+
+##### Fetch Join
+* JPQL 로 직접 조인문 작성. Cartesian Product 에 의해 페이징 처리 불가능함. 
+* OneToMany 관계에서는 Cartesian Product 에 의해 페이징 처리 불가능함.
+
+##### Entity Graph
+* @EntityGraph 에 명시. Outer Join 처리됨. 
+* OneToOne 관계에서 사용.
+* OneToMany 관계에서는 Cartesian Product 에 의해 페이징 처리 불가능함.
+```java
+
+```
+
+##### FetchMode
+* @Fetch 명시.
+* OneToMany 관계에서 사용. 
+* IN 절을 이용해 대상 레코드를 찾아 매핑.  
+```java
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    private List<OrderItem> orderItem;
+```
+* SQL 2회 수행. 또는 (Count / BatchSize)+1 회 수행됨. 
+* hibernate.default_batch_fetch_size 기본 BatchSize를 정의할 수 있다. 
+     

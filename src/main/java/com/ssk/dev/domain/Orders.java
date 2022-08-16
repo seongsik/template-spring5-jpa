@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Table;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -25,6 +22,11 @@ public class Orders implements Serializable {
     private LocalDateTime orderDate;
     private String status;
     private Long deliveryId;
-    private Long memberId;
+
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }

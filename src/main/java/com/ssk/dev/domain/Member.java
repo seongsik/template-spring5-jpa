@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by sik371@ktnet.co.kr 2022-08-11 오후 7:00
@@ -14,10 +15,10 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-public class Member {
+public class Member implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long member_id;
 
     private String name;
     private String city;

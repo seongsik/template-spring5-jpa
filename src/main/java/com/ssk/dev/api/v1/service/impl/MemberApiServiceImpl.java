@@ -5,7 +5,6 @@ import com.ssk.dev.api.v1.service.MemberApiService;
 import com.ssk.dev.domain.Member;
 import com.ssk.dev.repository.MemberRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,7 @@ public class MemberApiServiceImpl implements MemberApiService {
     public List<MemberDto> findAll() {
         List<Member> members = memberRepository.findAll();
         return members.stream().map(MemberDto::new).collect(Collectors.toList());
-
-//        return null;
     }
+
+
 }

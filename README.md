@@ -94,45 +94,48 @@ public class SwaggerConfig {
 
 ## JPA
 ### Spring JPA 설정
-* jpa-context.xml 에 정의함. 
+* root-context.xml 에 정의함. 
 ```xml
-    <!-- Repository 패키지 경로 -->
-    <jpa:repositories base-package="com.ssk.dev.repository"/>
+       <!-- DB접속 DataSource 빈생성 -->
+       <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+           <property name="driverClassName" value="org.h2.Driver" />
+           <property name="url" value="jdbc:h2:~/test;AUTO_SERVER=true" />
+           <property name="username" value="sa" />
+           <property name="password" value="" />
+       </bean>
+   
+   
+       <!-- JPA 설정 -->
+       <bean id="entityManagerFactory"
+             class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+           <property name="dataSource" ref="dataSource"/>
+           <property name="jpaVendorAdapter">
+               <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                   <property name="generateDdl" value="true" />
+               </bean>
+           </property>
+           <property name="packagesToScan" value="com.ssk.dev"/>
+   
+           <property name="jpaProperties">
+               <props>
+                   <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 
-    <!-- JPA 트랜젝션 매니저 빈생성 -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" >
-        <property name="entityManagerFactory" ref="emf" />
-    </bean>
-    <tx:annotation-driven transaction-manager="transactionManager" />
+                   <prop key="hibernate.max_fetch_depth">3</prop>
+                   <prop key="hibernate.jdbc.fetch_size">50</prop>
+                   <prop key="hibernate.jdbc.batch_size">10</prop>
+                   <prop key="hibernate.show_sql">true</prop>
 
-    <!-- Hibernate JPA구현 EntityManager 빈생성 -->
-    <bean id="emf"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <!--Datasource-->
-        <property name="dataSource" ref="dataSource"/>
-
-        <!-- 하이버네이트 구현체 사용 -->
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
-        </property>
-
-        <!-- Entity 위치 -->
-        <property name="packagesToScan" value="com.ssk.dev.domain"/>
-
-        <!--옵션-->
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-                <prop key="hibernate.show_sql">true</prop>              <!-- 콘솔에 하이버네이트가 실행하는 SQL문 출력 -->
-                <prop key="hibernate.format_sql">true</prop>            <!-- SQL 출력 시 보기 쉽게 정렬 -->
-                <prop key="hibernate.use_sql_comments">true</prop>      <!-- 쿼리 출력 시 주석(comments)도 함께 출력 -->
-
-                <prop key="hibernate.max_fetch_depth">3</prop>
-                <prop key="hibernate.jdbc.fetch_size">50</prop>
-                <prop key="hibernate.jdbc.batch_size">10</prop>
-            </props>
-        </property>
-    </bean>
+                <!-- Entity 의 field name 을 Camelcase 로 사용할 수 있도록 -->
+                <prop key="hibernate.naming.implicit-strategy">org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</prop>
+                <prop key="hibernate.naming.physical-strategy">org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy</prop>
+               </props>
+           </property>
+       </bean>
+   
+       <bean id="transactionManager"
+             class="org.springframework.orm.jpa.JpaTransactionManager">
+           <property name="entityManagerFactory" ref="entityManagerFactory" />
+       </bean>
 ```
 * transactionManager 
     * EntityManagerFactory는 트랜잭션 기반 데이터 엑세스 시 사용할 트랜잭션 매니저를 필요로 한다.
@@ -145,10 +148,15 @@ public class SwaggerConfig {
 
 ### Spring Data JPA
 * JPA EntityManager를 래핑해 더 단순화된 JPA기반 데이터엑세스 인터페이스를 제공. 
-* Repository의 추상화를 위해 jpa-context.xml 에 추가로 정의.
-```xml
-    <!-- Repository 패키지 경로 -->
-    <jpa:repositories base-package="com.ssk.dev.repository" entity-manager-factory-ref="emf" transaction-manager-ref="transactionManager"/>
+* Repository의 추상화를 위해 JpaConfig.java 에 추가로 정의.
+
+```java
+@Configuration
+@EnableJpaRepositories("com.ssk.dev.repository")
+@EnableTransactionManagement
+public class JpaConfig {
+
+}
 ```
 
 #### JpaRepository
@@ -167,7 +175,7 @@ public class SwaggerConfig {
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long memberId;
     private String name;
 }
 ```
@@ -185,11 +193,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 ```java
 @Data
 public class MemberDto {
-    private Long id;
+    private Long memberId;
     private String name;
 
     public MemberDto(Member o) {
-        this.id = o.getId();
+        this.memberId = o.getMemberId();
         this.name = o.getName();
     }
 }

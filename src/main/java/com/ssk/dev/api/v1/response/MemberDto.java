@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class MemberDto {
-    private Long id;
+    private Long member_id;
 
     private String name;
     private String city;
@@ -16,7 +16,7 @@ public class MemberDto {
     private String zipcode;
 
     public MemberDto(Member o) {
-        this.id = o.getId();
+        this.member_id = o.getMember_id();
         this.name = o.getName();
         this.city = o.getCity();
         this.street = o.getStreet();

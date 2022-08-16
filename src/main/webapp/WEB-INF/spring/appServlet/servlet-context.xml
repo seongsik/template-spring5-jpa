@@ -12,6 +12,20 @@
     <!-- RequestMapping 정의되지 않은 resources 에 대한 처리 담담.   -->
     <mvc:default-servlet-handler/>
 
+
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <ref bean="sortResolver"/>
+            <ref bean="pageableResolver" />
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
+    <bean id="sortResolver" class="org.springframework.data.web.SortHandlerMethodArgumentResolver" />
+    <bean id="pageableResolver" class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+        <constructor-arg ref="sortResolver" />
+    </bean>
+
+
     <context:component-scan base-package="com.ssk.dev" />
 
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

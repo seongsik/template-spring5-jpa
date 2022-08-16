@@ -239,6 +239,41 @@ public class ApiResponse<T> {
 }
 ``` 
 
+#### Paging
+* servlet-context 또는 Configuration 에 페이징 관련 Argument Resolover 정의. 
+```xml
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <ref bean="sortResolver"/>
+            <ref bean="pageableResolver" />
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
+    <bean id="sortResolver" class="org.springframework.data.web.SortHandlerMethodArgumentResolver" />
+    <bean id="pageableResolver" class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+        <constructor-arg ref="sortResolver" />
+    </bean>
+```
+```java
+@Configuration
+@EnableSpringDataWebSupport
+public class WebMvcConfig implements WebMvcConfigurer {
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add( new PageableHandlerMethodArgumentResolver());
+    }
+}
+```
+
+* Controller Parameter 로 Pageable 정의
+* repository Parameter 로 Pageable 전달
+```java
+public ApiResponse<List<MemberDto>> members(Pageable pageable) {
+    List<Member> members = memberRepository.findAll(pageable).getContent();
+}
+``` 
+
+
 ### JPA JOIN
 #### Eager Loading
 * ManyToOne, OneToOne 관계에서 주로 사용.

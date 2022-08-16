@@ -1,8 +1,8 @@
 package com.ssk.dev.api.v1;
 
 import com.ssk.dev.api.v1.response.ApiResponse;
-import com.ssk.dev.api.v1.response.MemberDto;
-import com.ssk.dev.api.v1.service.MemberApiService;
+import com.ssk.dev.api.v1.response.OrderDto;
+import com.ssk.dev.api.v1.service.OrderApiService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,18 +16,18 @@ import java.util.List;
  */
 @Controller
 @AllArgsConstructor
-@RequestMapping(value = "/api/v1/member")
-public class MemberApiController {
+@RequestMapping(value = "/api/v1/orders")
+public class OrderApiController {
 
-    private final MemberApiService memberApiService;
+    private final OrderApiService orderApiService;
 
     /**
-     * @return ApiResponse<List<MemberDto>> 멤버 목록
+     * @return ApiResponse<List<OrderDto>> 주문 목록
      */
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ApiResponse<List<MemberDto>> members() {
-        List<MemberDto> data = memberApiService.findAll();
+    public ApiResponse<List<OrderDto>> members() {
+        List<OrderDto> data = orderApiService.findAll();
         return new ApiResponse<>(data.size(), data);
     }
 }

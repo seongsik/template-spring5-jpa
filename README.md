@@ -2,7 +2,7 @@
 seongsik-kim
 
 1. [Spec](#Spec)
-1. [pom.xml](#pom.xml)
+1. [Dependencies](#Dependencies)
 1. [H2 Database](#H2-Database)
 1. [Faker](#Faker)
 1. [JPA](#JPA)
@@ -15,7 +15,8 @@ seongsik-kim
 * H2 Database
 * Intellij 및 STS 호환
 
-## pom.xml
+## Dependencies
+* pom.xml
 ```xml
 
         <!--template-spring-jpa-->

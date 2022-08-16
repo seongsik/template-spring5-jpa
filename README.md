@@ -274,16 +274,14 @@ public class ApiResponse<T> {
 * FetchType 과 무관하게 발생할 수 있다. 
 
 ##### Fetch Join
-* JPQL 로 직접 조인문 작성. Cartesian Product 에 의해 페이징 처리 불가능함. 
+* JPQL 로 직접 조인문 작성. 
+* OneToOne, ManyToOne 관계에서 사용.
 * OneToMany 관계에서는 Cartesian Product 에 의해 페이징 처리 불가능함.
 
 ##### Entity Graph
 * @EntityGraph 에 명시. Outer Join 처리됨. 
-* OneToOne 관계에서 사용.
+* OneToOne, ManyToOne 관계에서 사용.
 * OneToMany 관계에서는 Cartesian Product 에 의해 페이징 처리 불가능함.
-```java
-
-```
 
 ##### FetchMode
 * @Fetch 명시.

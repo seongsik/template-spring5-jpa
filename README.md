@@ -1,14 +1,11 @@
 # Tempate - Spring 5 - JPA
 seongsik-kim
 
-JPA 핵심은 EntityManager Interface. 
+* Spring 5.3.22
+* JDK 1.8.0_231
+* H2 Database
+* Intellij 및 STS 호환
 
-
-1. pom.xml
-1. H2 Database 
-1. Faker
-1. Swagger
-1. JPA
 
 
 ## pom.xml

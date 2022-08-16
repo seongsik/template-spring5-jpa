@@ -124,6 +124,7 @@ public class SwaggerConfig {
                    <prop key="hibernate.jdbc.fetch_size">50</prop>
                    <prop key="hibernate.jdbc.batch_size">10</prop>
                    <prop key="hibernate.show_sql">true</prop>
+                   <prop key="hibernate.format_sql=true">true</prop>
 
                 <!-- Entity 의 field name 을 Camelcase 로 사용할 수 있도록 -->
                 <prop key="hibernate.physical_naming_strategy">com.ssk.dev.config.HibernatePhysicalNamingStrategy</prop>
@@ -237,3 +238,22 @@ public class ApiResponse<T> {
     private T data;
 }
 ``` 
+
+### JPA JOIN
+#### Eager Loading
+* Orders.java
+```java
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
+```
+
+#### Lazy Loading
+* Lazy Loading 은 최초 Proxy Object 에 바인딩 처리하며, 객체 접근 시 데이터를 조회한다.  
+* Orders.java
+```java
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+```
+

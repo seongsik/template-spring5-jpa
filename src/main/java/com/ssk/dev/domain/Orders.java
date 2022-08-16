@@ -21,12 +21,15 @@ public class Orders implements Serializable {
 
     private LocalDateTime orderDate;
     private String status;
-    private Long deliveryId;
-
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 
 }

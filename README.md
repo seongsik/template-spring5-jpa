@@ -4,7 +4,6 @@ seongsik-kim
 1. [Spec](#Spec)
 1. [Dependencies](#Dependencies)
 1. [H2 Database](#H2-Database)
-1. [Faker](#Faker)
 1. [JPA](#JPA)
 1. [Spring Data JPA](#Spring-Data-JPA)
 1. [JPA Join](#JPA-JOIN)
@@ -78,8 +77,6 @@ seongsik-kim
 ```
 
 
-## Faker
-
 ## Swagger
 * SwaggerConfig.java 구현
 * (Optional) ApiInfo Method 구현하여 Document 설명.
@@ -101,15 +98,6 @@ public class SwaggerConfig {
 ### Spring JPA 설정
 * root-context.xml 에 정의함. 
 ```xml
-       <!-- DB접속 DataSource 빈생성 -->
-       <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-           <property name="driverClassName" value="org.h2.Driver" />
-           <property name="url" value="jdbc:h2:~/test;AUTO_SERVER=true" />
-           <property name="username" value="sa" />
-           <property name="password" value="" />
-       </bean>
-   
-   
        <!-- JPA 설정 -->
        <bean id="entityManagerFactory"
              class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
